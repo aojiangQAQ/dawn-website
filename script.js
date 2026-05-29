@@ -34,6 +34,35 @@ document.querySelectorAll('.nav__link[href^="#"]').forEach(a => {
   });
 });
 
+// ===== SIDEBAR VIEW SWITCHING =====
+(function() {
+  const navItems = document.querySelectorAll('.hero__preview-nav-item[data-view]');
+  const views = document.querySelectorAll('.preview-view[data-view]');
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const target = item.getAttribute('data-view');
+
+      // Update nav active state
+      navItems.forEach(n => n.classList.remove('active'));
+      item.classList.add('active');
+
+      // Switch view with animation
+      views.forEach(v => {
+        if (v.getAttribute('data-view') === target) {
+          v.classList.add('active');
+          // Re-trigger animation
+          v.style.animation = 'none';
+          v.offsetHeight; // force reflow
+          v.style.animation = '';
+        } else {
+          v.classList.remove('active');
+        }
+      });
+    });
+  });
+})();
+
 // Console typing effect
 (function() {
   const lines = [
